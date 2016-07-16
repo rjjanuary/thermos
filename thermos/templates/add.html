@@ -9,15 +9,31 @@ Thermos -- Add URL
         <section>
         <h1>Add a new URL</h1>
             <form action="" method="post">
-                    <article>
-                        <p>
-                            Paste your bookmark here:
-                            <input type="text" name="url">
-                        </p>
-                        <p>
-                            <button type="submit">Submit</button>
-                        </p>
-                    </article>
+                {{ form.hidden_tag() }}
+                <table>
+                    <tr {% if form.url.errors %} class="error" {%endif%}>
+                        <td> Enter bookmark here:</td>
+                        <td> {{form.url(size=50)}} </td>
+                    </tr>
+                    <tr class="error">
+                        <td></td>
+                        <td>
+                            <ul>
+                                {% for error in form.url.errors %}
+                                    <li>{{ error }} </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Add an optional description:</td>
+                        <td>{{form.description(size=50)}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button type="submit">Submit</button></td>
+                    </tr>
+                </table>
             </form>
         </section>
 
