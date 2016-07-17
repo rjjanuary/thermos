@@ -2,6 +2,7 @@ import os
 
 from flask import Flask #, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 from logging import DEBUG
 
@@ -14,8 +15,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'th
 app.config['DEBUG'] = True
 db = SQLAlchemy(app)
 
-app.logger.setLevel(DEBUG)
-app.logger.debug('__init__ finished')
+#Configure Authentication
+login_manager=LoginManager()
+login_manager.session_protection = "strong"
+login_manager.login_view = "login"              #set where to send people needing to log in
+login_manager.init_app(app)                     #integrates login into our flask app
+
+# app.logger.setLevel(DEBUG)
+# app.logger.debug('__init__ finished')
 
 import views
 import models
