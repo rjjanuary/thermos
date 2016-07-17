@@ -1,5 +1,5 @@
 from thermos import app, db
-from models import User
+from thermos.models import User
 from flask_script import Manager, prompt_bool
 
 manager = Manager(app)
