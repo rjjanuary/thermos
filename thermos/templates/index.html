@@ -11,8 +11,17 @@ Thermos -- Welcome
             <p>This is a social bookmarking site.</p>
         </header>
         <section>
-            <h3>section1</h3>
-            <p>stuff</p>
+            <h2>Recent Added Bookmarks</h2>
+            {% if new_bookmarks %}
+                <ul>
+
+                    {% for bm in new_bookmarks: %}
+                        <li>{{ bm.user.username }} added <a href="{{ bm.url }}">{{ bm.description }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                No bookmarks added yet.
+            {% endif %}
         </section>
         <section>
             <h3>section2</h3>
@@ -64,9 +73,12 @@ Thermos -- Welcome
                         <p>{{ user }}</p>
                         <p>{{ user.initials() }}</p>
                     </section>
+
                     <section>
-                        <h2>article section h2</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
+                        <h2>Recent Bookmarks</h2>
+                        {% for bm in new_bookmarks: %}
+                            <p>{{ bm.description }}</p>
+                        {% endfor %}
                     </section>
                     <footer>
                         <h3>article footer h3</h3>
