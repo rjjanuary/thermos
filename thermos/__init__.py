@@ -20,7 +20,7 @@ db = SQLAlchemy(app)
 #Configure Authentication
 login_manager=LoginManager()
 login_manager.session_protection = "strong"
-login_manager.login_view = "login"              #set where to send people needing to log in
+login_manager.login_view = "auth.login"              #set where to send people needing to log in
 login_manager.init_app(app)                     #integrates login into our flask app
 
 #enable debugtoolbar
@@ -30,6 +30,9 @@ toolbar = DebugToolbarExtension(app)
 moment = Moment(app)
 # app.logger.setLevel(DEBUG)
 # app.logger.debug('__init__ finished')
+
+from .auth import auth as auth_blueprint
+app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
 import views
 import models

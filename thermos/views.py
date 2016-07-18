@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, abo
 from flask_login import login_required, login_user, logout_user, current_user
 
 from models import Bookmark, User, Tag
-from forms import BookmarkForm, LoginForm, SignupForm
+from forms import BookmarkForm#, LoginForm, SignupForm commented out when doing blueprints
 from thermos import db, app, login_manager
 
 
