@@ -50,8 +50,10 @@
 
                 {% block sidebar %}
                     <aside>
-                        <h3>aside</h3>
-                        <p>thing</p>
+                        <h3>Tags</h3>
+                            {% for t in all_tags() %}
+                                <a href="{{ url_for('tag',name=t)}}">{{ t }}</a>
+                            {% endfor %}
                     </aside>
                 {% endblock %}
             </div> <!-- #main -->
@@ -63,8 +65,12 @@
             </footer>
         </div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src=" {{ url_for('static', filename='js/vendor/jquery-1.11.2.min.js') }} "><\/script>')</script>
-        <script src="js/main.js"></script>
+        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
+        <!--<script>window.jQuery || document.write('<script src=" {{ url_for('static', filename='js/vendor/jquery-1.11.2.min.js') }} "><\/script>')</script>-->
+        <!--<script src="js/main.js"></script>-->
+
+        {{ moment.include_jquery() }}
+        {{ moment.include_moment() }}
+
     </body>
 </html>

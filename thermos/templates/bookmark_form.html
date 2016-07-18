@@ -2,20 +2,20 @@
 {% from "form_macros.html" import render_field %}
 
 {% block title %}
-Thermos -- Add URL
+Thermos -- {{ title }}
 {% endblock %}
 
 {% block content %}
 
         <section>
-        <h1>Add a new URL</h1>
+        <h1>{{ title }}</h1>
             <form action="" method="post">
                 {{ form.hidden_tag() }}
                 <table>
                     {{ render_field(form.url, size=50) }}
                     {{ render_field(form.description, size=50) }}
-
-                    <tr>
+                    {{ render_field(form.tags, size=50) }}
+                    <tr class="submit">
                         <td></td>
                         <td><button type="submit">Submit</button></td>
                     </tr>
