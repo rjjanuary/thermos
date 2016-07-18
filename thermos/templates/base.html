@@ -16,12 +16,12 @@
 
         <div class="header-container">
             <header class="wrapper clearfix">
-                <a href="{{url_for('index') }}" ><h1 class="title">h1.title</h1></a>
+                <a href="{{url_for('main.index') }}" ><h1 class="title">h1.title</h1></a>
                 <nav>
                     <ul>
-                        <li><a href=" {{ url_for('add') }} ">Add URL</a></li>
+                        <li><a href=" {{ url_for('bookmarks.add') }} ">Add URL</a></li>
                         {% if current_user.is_authenticated %}
-                            <li><a href="{{url_for('user', username=current_user.username) }}">My Links</a></li>
+                            <li><a href="{{url_for('bookmarks.user', username=current_user.username) }}">My Links</a></li>
                             <li><a href="{{url_for('auth.logout') }}">Sign out</a></li>
                         {% else %}
                             <li><a href="{{url_for('auth.signup') }}">Sign up</a></li>
@@ -52,7 +52,7 @@
                     <aside>
                         <h3>Tags</h3>
                             {% for t in all_tags() %}
-                                <a href="{{ url_for('tag',name=t)}}">{{ t }}</a>
+                                <a href="{{ url_for('bookmarks.tag',name=t)}}">{{ t }}</a>
                             {% endfor %}
                     </aside>
                 {% endblock %}
