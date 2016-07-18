@@ -4,6 +4,7 @@ from flask import Flask #, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_moment import Moment
+from flask_debugtoolbar import DebugToolbarExtension
 
 from logging import DEBUG
 
@@ -21,6 +22,9 @@ login_manager=LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "login"              #set where to send people needing to log in
 login_manager.init_app(app)                     #integrates login into our flask app
+
+#enable debugtoolbar
+toolbar = DebugToolbarExtension(app)
 
 #for displaying timestamps
 moment = Moment(app)
