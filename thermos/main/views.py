@@ -3,6 +3,7 @@ from flask import render_template
 from . import main
 from .. import login_manager
 from ..models import User, Bookmark, Tag
+from flask_statsd import statsd_client
 
 @login_manager.user_loader
 #^tells flask-login how to retrieve a user by id
@@ -10,9 +11,10 @@ def load_user(userid):
     return User.query.get(int(userid))
 
 @main.route('/')
-@main.route('/index')
+# @main.route('/index')
 def index():
-    return render_template('index.html', new_bookmarks=Bookmark.newest(5))
+    # with statsd_client.timer('index'):
+        return render_template('index.html', new_bookmarks=Bookmark.newest(5))
 
 
 @main.app_errorhandler(403)

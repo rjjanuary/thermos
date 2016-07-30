@@ -5,10 +5,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_moment import Moment
 from flask_debugtoolbar import DebugToolbarExtension
+from flask_statsd import statsd_middleware, StatsClient
 
 from .config import config_by_name
 
 db = SQLAlchemy()
+# stats_client = StatsClient()
 
 #Configure Authentication
 login_manager=LoginManager()
@@ -29,6 +31,10 @@ def create_app(config_name):
     moment.init_app(app)
     toolbar.init_app(app)
 
+    #statsd changes
+    app.stats_client=StatsClient(app)       #internal statsd implementation
+    app.wsgi_app = statsd_middleware(app)   #statsd middleware
+
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint, url_prefix='/')
 
@@ -39,25 +45,3 @@ def create_app(config_name):
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     return app
-
-#
-# basedir = os.path.abspath(os.path.dirname(__file__))
-#
-#     app = Flask(__name__)
-#     app.config['SECRET_KEY'] = '\xf7]\x88\x89\x8a\xd8\x99\x0cf\x91\xc9c\x9f\n\x03\x9f8\xadA\xd2\xfc\xf5\x17\x0e'
-#     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
-#     app.config['DEBUG'] = True
-#     db = SQLAlchemy(app)
-#
-#                   #integrates login into our flask app
-#
-# toolbar = DebugToolbarExtension(app)
-#
-# # app.logger.setLevel(DEBUG)
-# # app.logger.debug('__init__ finished')
-#
-# from .auth import auth as auth_blueprint
-# app.register_blueprint(auth_blueprint, url_prefix='/auth')
-#
-# import views
-# import models

@@ -4,6 +4,10 @@ from thermos import create_app, db
 from flask_script import Manager, prompt_bool
 from flask_migrate import Migrate, MigrateCommand
 
+###load models to make flask migrate aware of them
+from thermos.models import User, Bookmark, Tag, tags
+##########################
+
 app = create_app(os.getenv('THERMOS_ENV') or 'dev')
 
 manager = Manager(app)

@@ -20,6 +20,7 @@ def login():
             return redirect(request.args.get('next') or url_for('main.index'))
             #^'next' will redirect the user to where they were attempting to go.  (look at browser query string)
         flash('Incorrect username or password.')
+
     return render_template('login.html', form=form)
 
 @auth.route('/logout')

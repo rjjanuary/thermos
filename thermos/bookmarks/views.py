@@ -19,7 +19,7 @@ def add():
         db.session.commit()
         # app.logger.debug("Stored Bookmark: '{}'".format(url))
         flash("Stored Bookmark: '{}'".format(url))
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     return render_template('bookmark_form.html',form=form, title="Add a bookmark")
 
 @bookmarks.route('/edit/<int:bookmark_id>', methods=['GET','POST'])

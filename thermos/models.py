@@ -45,7 +45,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
     bookmarks = db.relationship('Bookmark', backref='user', lazy='dynamic')
-    password_hash = db.Column(db.String)
+    password_hash = db.Column(db.String(80))
 
     @property
     def password(self):

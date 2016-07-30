@@ -4,6 +4,8 @@ from flask_wtf.html5 import URLField
 from wtforms.validators import DataRequired, url, Length, Email, Regexp, EqualTo,\
     url, ValidationError
 
+from ..models import User
+
 class LoginForm(Form):
     username = StringField('Your Username:', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
