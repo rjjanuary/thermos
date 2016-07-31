@@ -32,8 +32,8 @@ def create_app(config_name):
     toolbar.init_app(app)
 
     #statsd changes
-    app.stats_client=StatsClient(app)       #internal statsd implementation
-    app.wsgi_app = statsd_middleware(app)   #statsd middleware
+    #app.stats_client=StatsClient(app)       #internal statsd implementation
+    #app.wsgi_app = statsd_middleware(app)   #statsd middleware
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint, url_prefix='/')
