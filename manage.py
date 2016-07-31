@@ -20,9 +20,12 @@ manager.add_command('db', MigrateCommand)
 def insert_data():
     # db.create_all()
     def add_bookmark(url, description, tags):
+        print 'adding bookmark'
         db.session.add(Bookmark(url=url, description=description, user="rjanuary",
                                 tags=tags))
+        print 'adding tags'
         for name in ['python','search','knowledge','notused']:
+            print 'tag: {}'.format(name)
             db.session.add(Tag(name))
 
     db.session.add(User(username="rjanuary", email="rjanuary@example.com", password="test"))
