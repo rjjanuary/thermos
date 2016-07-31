@@ -8,7 +8,7 @@ class Config:
     STATSD_HOST = 'nic-vtxprd-oradb04'
 
 class DevelopmentConfig(Config):
-    DEBUG = False
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
 
 class TestingConfig(Config):
