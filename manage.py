@@ -19,9 +19,9 @@ manager.add_command('db', MigrateCommand)
 @manager.command
 def insert_data():
     # db.create_all()
-    def add_bookmark(url, description, tags):
+    def add_bookmark(user, url, description, tags):
         print 'adding bookmark'
-        db.session.add(Bookmark(url=url, description=description, user="rjanuary",
+        db.session.add(Bookmark(url=url, description=description, user=user,
                                 tags=tags))
         print 'adding tags'
         for name in ['python','search','knowledge','notused']:
@@ -30,9 +30,10 @@ def insert_data():
 
     db.session.add(User(username="rjanuary", email="rjanuary@example.com", password="test"))
     db.session.add(User(username="other", email="other@example.com", password="test"))
+    ins_user = User.get_by_username("rjanuary")
 
-    add_bookmark('http://www.google.com','Google - Search Engine','search')
-    add_bookmark('http://www.python.org','Python homepage','programming,knowledge')
+    add_bookmark(ins_user,'http://www.google.com','Google - Search Engine','search')
+    add_bookmark(ins_user,'http://www.python.org','Python homepage','programming,knowledge')
 
     db.session.commit()
     print 'Initialized the database'
