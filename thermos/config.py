@@ -27,7 +27,7 @@ class MySQLConfig(Config):
 
 class MySQLStatsD(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://flask:flask@localhost/flask'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://thermos:thermos@localhost/thermos'
     STATSD_HOST = 'ets-vvaprd-metrics-a01'
     STATSD_PORT = 8125
 
