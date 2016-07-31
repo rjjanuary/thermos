@@ -9,6 +9,7 @@ from thermos.models import User, Bookmark, Tag, tags
 ##########################
 
 app = create_app(os.getenv('THERMOS_ENV') or 'dev')
+print ('THERMOS_ENV {} '.format(os.getenv('THERMOS_ENV')))
 
 manager = Manager(app)
 
