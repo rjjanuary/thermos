@@ -25,8 +25,8 @@ def insert_data():
     def add_bookmark(url, description, tags):
         db.session.add(Bookmark(url=url, description=description, user="rjanuary",
                                 tags=tags))
-    for name in ['python','search','knowledge','notused']:
-        db.session.add(Tag(name))
+        for name in ['python','search','knowledge','notused']:
+            db.session.add(Tag(name))
 
     db.session.commit()
 
