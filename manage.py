@@ -28,8 +28,6 @@ def insert_data():
         for name in ['python','search','knowledge','notused']:
             db.session.add(Tag(name))
 
-    db.session.commit()
-
     add_bookmark('http://www.google.com','Google - Search Engine','search')
     add_bookmark('http://www.python.org','Python homepage','programming,knowledge')
 
