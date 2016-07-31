@@ -25,9 +25,16 @@ class MySQLConfig(Config):
     STATSD_HOST = 'ets-vvaprd-metrics-a01'
     STATSD_PORT = 8125
 
+class MySQLStatsD(Config):
+    DEBUG = False
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://flask:flask@localhost/flask'
+    STATSD_HOST = 'ets-vvaprd-metrics-a01'
+    STATSD_PORT = 8125
+
 config_by_name = dict(
     dev = DevelopmentConfig,
     test = TestingConfig,
     prod = ProductionConfig,
-    mysql = MySQLConfig
+    mysql = MySQLConfig,
+    mysql_statsd = MySQLStatsD
 )
