@@ -21,14 +21,14 @@ class ProductionConfig(Config):
 
 class MySQLConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://flask:flask@localhost/flask'
-    STATSD_HOST = 'ets-vvaprd-metrics-a01'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://thermos:thermos@localhost/thermos'
+    STATSD_HOST = 'nic-vtxprd-oradb04'
     STATSD_PORT = 8125
 
 class MySQLStatsD(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://thermos:thermos@localhost/thermos'
-    STATSD_HOST = 'ets-vvaprd-metrics-a01'
+    STATSD_HOST = 'nic-vtxprd-oradb04'
     STATSD_PORT = 8125
 
 config_by_name = dict(
