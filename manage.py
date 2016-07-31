@@ -20,7 +20,7 @@ manager.add_command('db', MigrateCommand)
 def insert_data():
     # db.create_all()
     def add_bookmark(user, url, description, tags):
-        print 'adding bookmark'
+        print 'adding bookmark user:{} url:{} desc:{} tags:{}'.format(user, url, description, tags)
         db.session.add(Bookmark(url=url, description=description, user=user,
                                 tags=tags))
         print 'adding tags'
