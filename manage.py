@@ -24,12 +24,15 @@ def insert_data():
         db.session.add(Bookmark(url=url, description=description, user=user,
                                 tags=tags))
         print 'adding tags'
-        for name in ['python','search','knowledge','notused']:
-            print 'tag: {}'.format(name)
-            db.session.add(Tag(name))
+        for tag in tags.split(','):
+            db.session.add(Tag(tag))
+        # for name in ['python','search','knowledge','notused']:
+        #     print 'tag: {}'.format(name)
+        #     db.session.add(Tag(name))
 
     db.session.add(User(username="rjanuary", email="rjanuary@example.com", password="test"))
     db.session.add(User(username="other", email="other@example.com", password="test"))
+
     ins_user = User.get_by_username("rjanuary")
 
     add_bookmark(ins_user,'http://www.google.com','Google - Search Engine','search')
