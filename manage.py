@@ -21,11 +21,10 @@ def insert_data():
     # db.create_all()
     def add_bookmark(user, url, description, tags):
         print 'adding bookmark user:{} url:{} desc:{} tags:{}'.format(user, url, description, tags)
-        db.session.add(Bookmark(url=url, description=description, user=user,
-                                tags=tags))
-        print 'adding tags'
-        for tag in tags.split(','):
-            db.session.add(Tag(tag))
+        db.session.add(Bookmark(url=url, description=description, user=user, tags=tags))
+        # print 'adding tags'
+        # for tag in tags.split(','):
+        #     db.session.add(Tag(tag))
         # for name in ['python','search','knowledge','notused']:
         #     print 'tag: {}'.format(name)
         #     db.session.add(Tag(name))
@@ -35,8 +34,8 @@ def insert_data():
 
     ins_user = User.get_by_username("rjanuary")
 
-    add_bookmark(ins_user,'http://www.google.com','Google - Search Engine','search')
-    add_bookmark(ins_user,'http://www.python.org','Python homepage','programming,knowledge')
+    add_bookmark(ins_user,'http://www.google.com','Google - Search Engine','search, all the stuff, yea!')
+    add_bookmark(ins_user,'http://www.python.org','Primary Python site','programming,knowledge')
 
     db.session.commit()
     print 'Initialized the database'
