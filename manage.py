@@ -22,12 +22,6 @@ def insert_data():
     def add_bookmark(user, url, description, tags):
         print 'adding bookmark user:{} url:{} desc:{} tags:{}'.format(user, url, description, tags)
         db.session.add(Bookmark(url=url, description=description, user=user, tags=tags))
-        # print 'adding tags'
-        # for tag in tags.split(','):
-        #     db.session.add(Tag(tag))
-        # for name in ['python','search','knowledge','notused']:
-        #     print 'tag: {}'.format(name)
-        #     db.session.add(Tag(name))
 
     db.session.add(User(username="rjanuary", email="rjanuary@example.com", password="test"))
     db.session.add(User(username="other", email="other@example.com", password="test"))

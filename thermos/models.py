@@ -72,6 +72,7 @@ class Tag(db.Model):
 
     @staticmethod
     def get_or_create(name):
+        name = name.strip()
         try:
             return Tag.query.filter_by(name=name).one()
         except:
