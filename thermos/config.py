@@ -11,6 +11,12 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
 
+class DevelopmentStatsD(Config):
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
+    STATSD_HOST = 'nic-vtxprd-oradb04'
+    STATSD_PORT = 8125
+
 class TestingConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
@@ -34,5 +40,6 @@ config_by_name = dict(
     test = TestingConfig,
     prod = ProductionConfig,
     mysql = MySQLConfig,
-    mysql_statsd = MySQLStatsD
+    mysql_statsd = MySQLStatsD,
+    dev_statsd = DevelopmentStatsD
 )
