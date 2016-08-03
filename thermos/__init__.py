@@ -50,7 +50,7 @@ def create_app(config_name):                        # app factory, generating ou
                 context=query.context.replace(':','_')
                 print context
                 duration = query.duration * 1000 #convert to ms
-                app.stats_client.timing('thermos.queries,context={},path=()'.format(context,environ['PATH_INFO']),duration)
+                app.stats_client.timing('thermos.queries,context={}'.format(context),duration)
                 # app.stats_client.timing('thermos.queries context={}'.format(query.context),(query.duration*1000)) #statsd_client.timing('sd_timing',ms)
                 print (query.duration)
             return response
