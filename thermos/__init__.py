@@ -10,6 +10,7 @@ from flask_statsd import statsd_middleware, StatsClient
 from .config import config_by_name
 
 db = SQLAlchemy()
+stats_client = StatsClient
 
 #Configure Authentication
 login_manager=LoginManager()
@@ -30,9 +31,8 @@ def create_app(config_name):
     moment.init_app(app)
     toolbar.init_app(app)
 
-    #statsd changes
-    app.stats_client=StatsClient(app)       #internal statsd implementation
-    app.wsgi_app = statsd_middleware(app)   #statsd middleware
+    stats_client.init_app(app)                      # initialize our statsd client, assign it within app
+    app.wsgi_app = statsd_middleware(app)           #statsd middleware
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint, url_prefix='/')
