@@ -12,7 +12,7 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
 
 class DevelopmentStatsD(Config):
-    DEBUG = True
+    DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
     STATSD_HOST = 'nic-vtxprd-oradb04'
     STATSD_PORT = 8125
