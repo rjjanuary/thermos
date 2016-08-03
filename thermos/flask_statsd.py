@@ -55,15 +55,16 @@ class statsd_middleware(object):
             self.status = status
             return start_response(*args, **kwargs)
 
-        # try:
-        with FlaskTimer(self.app) as ft:
-            response = self.wsgi_app(environ, start_response_wrapper)
-            ft.addTag("path",environ['PATH_INFO'])
-            ft.addTag("request_type", environ['REQUEST_METHOD'])
-            ft.addTag("status_code",self.status)
+        try:
+            with FlaskTimer(self.app) as ft:
+                response = self.wsgi_app(environ, start_response_wrapper)
+                ft.addTag("path",environ['PATH_INFO'])
+                ft.addTag("request_type", environ['REQUEST_METHOD'])
+                ft.addTag("status_code",self.status)
 
-        # except Exception:
-        #     return self.wsgi_app(environ, start_response)
+        except Exception:
+            return self.wsgi_app(environ, start_response)
+
         return response
 
 # @app.after_request  # sql records are available up until the end of the request
