@@ -13,7 +13,7 @@ from time import time, sleep
 class StatsClient(base_statsd):
     def __init__(self, app=None):
         if app:
-            self.connect(app)
+            self.init_app(app)
     def init_app(self,app):
         super(StatsClient,self).__init__(
             host=app.config['STATSD_HOST'],
