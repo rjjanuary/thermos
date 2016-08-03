@@ -47,6 +47,7 @@ def create_app(config_name):                        # app factory, generating ou
         if app.config['SQLALCHEMY_RECORD_QUERIES']:
             queries = get_debug_queries()
             for query in queries:
+                context=query.context.replace('.','_').replace(' ','_')
                 app.stats_client.timing('thermos.queries context={}'.format(query.context),(query.duration*1000)) #statsd_client.timing('sd_timing',ms)
                 print (query.duration)
             return response
