@@ -15,11 +15,13 @@ def login():
         #login and validate user
         user = User.get_by_username(username=form.username.data)
         if user is not None and user.check_password(form.password.data):
+            stats_client.incr('thermos.logins.success')             # added line to increment success counter
             login_user(user, form.remember_me.data)
             flash('logged in successfully as {}.'.format(user.username))
             return redirect(request.args.get('next') or url_for('main.index'))
             #^'next' will redirect the user to where they were attempting to go.  (look at browser query string)
         flash('Incorrect username or password.')
+        stats_client.incr('thermos.logins.fail')                    # added line to increment fail counter
 
     return render_template('login.html', form=form)
 
