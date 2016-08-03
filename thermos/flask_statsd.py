@@ -11,10 +11,14 @@ from time import time, sleep
 
 
 class StatsClient(base_statsd):
-    def __init__(self, app):
+    def __init__(self, app=None):
+        if app:
+            self.connect(app)
+    def init_app(self,app):
         super(StatsClient,self).__init__(
             host=app.config['STATSD_HOST'],
             port=app.config['STATSD_PORT'])
+        app.stats_client=self
 
 class FlaskTimer(object):
     def __init__(self, app, tags=None):
