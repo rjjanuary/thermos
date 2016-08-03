@@ -35,6 +35,7 @@ class MySQLConfig(Config):
 class MySQLStatsD(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://thermos:thermos@localhost/thermos'
+    SQLALCHEMY_RECORD_QUERIES = True
     # STATSD_HOST = '<insert_metric_host>'
     # STATSD_PORT = 8125
 
