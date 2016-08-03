@@ -10,7 +10,7 @@ from flask_statsd import statsd_middleware, StatsClient
 from .config import config_by_name
 
 db = SQLAlchemy()
-stats_client = StatsClient
+stats_client = StatsClient()
 
 #Configure Authentication
 login_manager=LoginManager()
