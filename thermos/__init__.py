@@ -31,7 +31,7 @@ def create_app(config_name):                        # app factory, generating ou
     toolbar.init_app(app)
 
     stats_client.init_app(app)                      # initialize our statsd client, assign it within app
-    app.wsgi_app = statsd_middleware(app)           # initialize our statsd middleware
+    # app.wsgi_app = statsd_middleware(app)           # initialize our statsd middleware
 
     from .main import main as main_blueprint        # blueprints are self contained portions of an application
     app.register_blueprint(main_blueprint, url_prefix='/')
@@ -47,8 +47,11 @@ def create_app(config_name):                        # app factory, generating ou
         if app.config['SQLALCHEMY_RECORD_QUERIES']:
             queries = get_debug_queries()
             for query in queries:
-                context=query.context.replace('.','_').replace(' ','_')
-                app.stats_client.timing('thermos.queries context={}'.format(query.context),(query.duration*1000)) #statsd_client.timing('sd_timing',ms)
+                context=query.context.replace(':','_')
+                print context
+                duration = query.duration * 1000 #convert to ms
+                app.stats_client.timing('thermos.queries,context={},path=()'.format(context,environ['PATH_INFO']),duration)
+                # app.stats_client.timing('thermos.queries context={}'.format(query.context),(query.duration*1000)) #statsd_client.timing('sd_timing',ms)
                 print (query.duration)
             return response
 
