@@ -1,9 +1,8 @@
 from flask import render_template
-
 from . import main
 from .. import login_manager
 from ..models import User, Bookmark, Tag
-#from flask_statsd import statsd_client
+
 
 @login_manager.user_loader
 #^tells flask-login how to retrieve a user by id

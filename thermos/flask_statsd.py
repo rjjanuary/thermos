@@ -1,13 +1,15 @@
 '''
 http://werkzeug.pocoo.org/docs/0.11/routing/
 https://ohadp.com/adding-a-simple-middleware-to-your-flask-application-in-1-minutes-89782de379a1#.6vwkw18f3
-http://steinn.org/post/flask-statsd/
-http://eddmann.com/posts/creating-a-basic-auth-wsgi-middleware-in-python/
+http://steinn.org/post/flask-statsd/                                                    #implement statsd in flask
+http://eddmann.com/posts/creating-a-basic-auth-wsgi-middleware-in-python/               #create middleware
 http://flask.pocoo.org/docs/0.11/api/
+http://flask.pocoo.org/snippets/53/                                                     #after_request
 
 '''
 from statsd import StatsClient as base_statsd
 from time import time, sleep
+from flask_sqlalchemy import get_debug_queries
 
 
 class StatsClient(base_statsd):
@@ -63,3 +65,11 @@ class statsd_middleware(object):
         # except Exception:
         #     return self.wsgi_app(environ, start_response)
         return response
+
+# @app.after_request  # sql records are available up until the end of the request
+# def after_request(response):  # hook into 'after request' allowing us to send to statsd
+#     if app.config['SQLALCHEMY_RECORD_QUERIES']:
+#         queries = get_debug_queries()
+#         for query in queries:
+#             print (query.duration)
+#         return response

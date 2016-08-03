@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask #, render_template, request, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, get_debug_queries
 from flask_login import LoginManager
 from flask_moment import Moment
 from flask_debugtoolbar import DebugToolbarExtension
@@ -9,21 +9,20 @@ from flask_statsd import statsd_middleware, StatsClient
 
 from .config import config_by_name
 
-db = SQLAlchemy()
-stats_client = StatsClient()
+db = SQLAlchemy()                                   # create instance of SQLAlchemy ORM engine
+stats_client = StatsClient()                        # create instance of our app level statsd client
 
 #Configure Authentication
-login_manager=LoginManager()
+login_manager=LoginManager()                        # begin to configure authentication
 login_manager.session_protection = "strong"
-login_manager.login_view = "auth.login"              #set where to send people needing to log in
+login_manager.login_view = "auth.login"             # set where to send people needing to log in
 
-#enable debugtoolbar
-toolbar = DebugToolbarExtension()
 
-#for displaying timestamps
-moment = Moment()
+toolbar = DebugToolbarExtension()                   # enable the debug toolbar (found on right when debug=true)
+moment = Moment()                                   # framework taking timestamps and converting to '2 hours ago'
 
-def create_app(config_name):
+
+def create_app(config_name):                        # app factory, generating our application object
     app = Flask(__name__)
     app.config.from_object(config_by_name[config_name])
     db.init_app(app)
@@ -32,9 +31,9 @@ def create_app(config_name):
     toolbar.init_app(app)
 
     stats_client.init_app(app)                      # initialize our statsd client, assign it within app
-    app.wsgi_app = statsd_middleware(app)           #statsd middleware
+    app.wsgi_app = statsd_middleware(app)           # initialize our statsd middleware
 
-    from .main import main as main_blueprint
+    from .main import main as main_blueprint        # blueprints are self contained portions of an application
     app.register_blueprint(main_blueprint, url_prefix='/')
 
     from .bookmarks import bookmarks as bkm_blueprint
@@ -43,4 +42,15 @@ def create_app(config_name):
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
+    @app.after_request                              # sql records are available up until the end of the request
+    def after_request(response):                    # hook into 'after request' allowing us to send to statsd
+        if app.config['SQLALCHEMY_RECORD_QUERIES']:
+            queries = get_debug_queries()
+            for query in queries:
+                app.stats_client.timing('thermos.queries context={}'.format(query.context),(query.duration*1000)) #statsd_client.timing('sd_timing',ms)
+                print (query.duration)
+            return response
+
     return app
+
+
