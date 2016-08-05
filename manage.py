@@ -1,12 +1,14 @@
 import os
 from thermos import create_app, db
-
 from flask_script import Manager, prompt_bool
 from flask_migrate import Migrate, MigrateCommand
 
 ###load models to make flask migrate aware of them
 from thermos.models import User, Bookmark, Tag, tags
 ##########################
+
+import random, pymysql
+from datetime import datetime
 
 app = create_app(os.getenv('THERMOS_ENV') or 'dev')
 print ('THERMOS_ENV {} '.format(os.getenv('THERMOS_ENV')))
@@ -33,6 +35,34 @@ def insert_data():
 
     db.session.commit()
     print 'Initialized the database'
+
+@manager.command
+def import_bookmarks():
+    def gen_username():
+        user_count =+ 1
+        return 'imp_{}'.format(user_count)
+
+    user_count = 0
+    record_count = 0
+    max_record_count = 1000
+    conn = pymysql.connect(host='10.162.2.55', port=3306, user='thermos', passwd='thermos', db='thermos')
+    cur = conn.cursor()
+
+    username = gen_username()
+    db.session.add(User(username=username, email="{}@example.com".format(username), password=username))
+    ins_user = User.get_by_username(username)
+
+    with open('./thermos/data/majestic_test.csv') as f:
+        next(f)
+        for l in f:
+            rank,rank2,url = l.split(',')
+            db.session.add(Bookmark(url=url.strip(), description=url.strip(), user=ins_user, tags='imported'))
+            record_count += 1
+            if record_count > max_record_count:
+                conn.commit()
+    conn.commit()
+
+    db.session.add(User(username="user", email="{}@example.com".format(user), password=user))
 
 
 @manager.command
