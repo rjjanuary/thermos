@@ -31,7 +31,7 @@ def create_app(config_name):                        # app factory, generating ou
     toolbar.init_app(app)
 
     stats_client.init_app(app)                      # initialize our statsd client, assign it within app
-    # app.wsgi_app = statsd_middleware(app)           # initialize our statsd middleware
+    app.wsgi_app = statsd_middleware(app)           # initialize our statsd middleware
 
     from .main import main as main_blueprint        # blueprints are self contained portions of an application
     app.register_blueprint(main_blueprint, url_prefix='/')
