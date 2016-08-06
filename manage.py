@@ -37,7 +37,7 @@ def insert_data():
     print 'Initialized the database'
 
 @manager.command
-def import_bookmarks(user_seed=0, max_bookmarks=2000, total_record_count=1000):
+def import_bookmarks(user_seed=0, poweruser_count=2000, max_bookmarks=300, total_record_count=50000):
 
     class fakeuser_factory(object):
         def __init__(self,user_seed=user_seed):
@@ -52,7 +52,7 @@ def import_bookmarks(user_seed=0, max_bookmarks=2000, total_record_count=1000):
 
     uf = fakeuser_factory()
 
-    user_record_count = int(max_bookmarks)*10                                   #seed first user problems
+    user_record_count = int(poweruser_count)                                   #seed first user problems
     total_record_count = int(total_record_count)
     max_bookmarks=int(max_bookmarks)
 
