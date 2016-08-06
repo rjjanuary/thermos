@@ -4,6 +4,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from . import bookmarks
 from .forms import BookmarkForm
 from .. import db
+from .. import stats_client
 from ..models import User, Bookmark, Tag
 
 @bookmarks.route('/add', methods=['GET','POST'])
@@ -19,6 +20,8 @@ def add():
         db.session.commit()
         # app.logger.debug("Stored Bookmark: '{}'".format(url))
         flash("Stored Bookmark: '{}'".format(url))
+
+        stats_client.incr('thermos.bookmarks')
         return redirect(url_for('main.index'))
     return render_template('bookmark_form.html',form=form, title="Add a bookmark")
 
