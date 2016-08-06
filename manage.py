@@ -37,33 +37,44 @@ def insert_data():
     print 'Initialized the database'
 
 @manager.command
-def import_bookmarks():
-    def gen_username():
-        user_count =+ 1
-        return 'imp_{}'.format(user_count)
+def import_bookmarks(user_seed=0, max_bookmarks=2000, total_record_count=1000):
 
-    user_count = 0
-    record_count = 0
-    max_record_count = 1000
-    conn = pymysql.connect(host='10.162.2.55', port=3306, user='thermos', passwd='thermos', db='thermos')
-    cur = conn.cursor()
+    class fakeuser_factory(object):
+        def __init__(self,user_seed=user_seed):
+            self._user_count=int(user_seed)
+        def usernumber(self):
+            self._user_count += 1
+            return self._user_count
+        def create_user(self):
+            username = 'user{}'.format(self.usernumber())
+            db.session.add(User(username=username, email="{}@example.com".format(username), password=username))
+            return User.get_by_username(username)
 
-    username = gen_username()
-    db.session.add(User(username=username, email="{}@example.com".format(username), password=username))
-    ins_user = User.get_by_username(username)
+    uf = fakeuser_factory()
 
-    with open('./thermos/data/majestic_test.csv') as f:
+    user_record_count = int(max_bookmarks)*10                                   #seed first user problems
+    total_record_count = int(total_record_count)
+    max_bookmarks=int(max_bookmarks)
+
+    ins_user = uf.create_user()
+    with open('./thermos/data/majestic_1000.csv') as f:
         next(f)
         for l in f:
+            print 't:{} u:{}'.format(total_record_count,user_record_count)
+            total_record_count -= 1
+            if total_record_count <= 0:
+                print 'Hit maximum import limit of {}'.format(total_record_count)
+                break                     #bail if we've hit our max record count
+            if user_record_count <= 0:
+                db.session.commit()
+                user_record_count = random.randrange(1, max_bookmarks)
+                ins_user = uf.create_user()
+                print 'created user:{} max bookmarks:{}'.format(ins_user.username,user_record_count)
             rank,rank2,url = l.split(',')
             db.session.add(Bookmark(url=url.strip(), description=url.strip(), user=ins_user, tags='imported'))
-            record_count += 1
-            if record_count > max_record_count:
-                conn.commit()
-    conn.commit()
-
-    db.session.add(User(username="user", email="{}@example.com".format(user), password=user))
-
+            # print 'inserted bookmark:{}'.format(url.strip())
+            user_record_count -= 1
+    db.session.commit()
 
 @manager.command
 def dropdb():
