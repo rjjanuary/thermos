@@ -57,7 +57,7 @@ def import_bookmarks(user_seed=0, max_bookmarks=2000, total_record_count=1000):
     max_bookmarks=int(max_bookmarks)
 
     ins_user = uf.create_user()
-    with open('./thermos/data/majestic_1000.csv') as f:
+    with open('./thermos/data/majestic_50000.csv') as f:
         next(f)
         for l in f:
             print 't:{} u:{}'.format(total_record_count,user_record_count)
