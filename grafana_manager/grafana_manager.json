@@ -1,0 +1,25 @@
+{
+  "hosts":
+    {
+      "VA":{
+        "host": "ets-vvaprd-metrics-a01",
+        "port": 3000,
+        "auth_token": "eyJrIjoibkYwNU5vYzZKNUJBbml4MVZudEtkbTAwWldCbW8zM1ciLCJuIjoiYmFja3VwcyIsImlkIjoxfQ=="}
+    ,
+      "TX":{
+        "host": "ets-vtxprd-metrics-a01",
+        "port": 3000,
+        "auth_token": "eyJrIjoiWVpMREIwZ0hiZnVZS2hhZDVkb09qWjFzQjI4YzQxOWgiLCJuIjoiYmFja3VwcyIsImlkIjoxfQ=="}
+    ,
+      "THERMOS":{
+        "host": "10.162.x.x",
+        "port": 3000,
+        "auth_token": ""}
+    },
+
+  "app_config": {
+    "results_file":"backup_results.json",
+    "backup_location":"/tmp/dashback",
+    "days_to_keep":30
+  }
+}
