@@ -19,7 +19,7 @@
 
   "app_config": {
     "results_file":"backup_results.json",
-    "backup_location":"/tmp/dashback",
+    "backup_location":"./backups",
     "days_to_keep":30
   }
 }
