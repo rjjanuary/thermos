@@ -37,7 +37,7 @@ def insert_data():
     print 'Initialized the database'
 
 @manager.command
-def import_bookmarks(user_seed=0, poweruser_count=2000, max_bookmarks=300, total_record_count=50000):
+def import_bookmarks(user_seed=0, poweruser_count=2000, max_bookmarks=300, total_record_count=500000):
 
     class fakeuser_factory(object):
         def __init__(self,user_seed=user_seed):
@@ -57,7 +57,7 @@ def import_bookmarks(user_seed=0, poweruser_count=2000, max_bookmarks=300, total
     max_bookmarks=int(max_bookmarks)
 
     ins_user = uf.create_user()
-    with open('./thermos/data/majestic_50000.csv') as f:
+    with open('./thermos/data/majestic_clean.csv') as f:
         next(f)
         for l in f:
             # print 't:{} u:{}'.format(total_record_count,user_record_count)
