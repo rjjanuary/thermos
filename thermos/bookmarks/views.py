@@ -21,8 +21,8 @@ def add():
         # app.logger.debug("Stored Bookmark: '{}'".format(url))
         flash("Stored Bookmark: '{}'".format(url))
 
-        stats_client.incr('thermos.bookmarks')
-    return redirect(url_for('main.index'))
+        return redirect(url_for('main.index'))
+    stats_client.incr('thermos.bookmarks')
     return render_template('bookmark_form.html',form=form, title="Add a bookmark")
 
 @bookmarks.route('/edit/<int:bookmark_id>', methods=['GET','POST'])
