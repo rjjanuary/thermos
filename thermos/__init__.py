@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask #, render_template, request, redirect, url_for, flash
+from flask import Flask, request #, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy, get_debug_queries
 from flask_login import LoginManager
 from flask_moment import Moment
@@ -50,8 +50,7 @@ def create_app(config_name):                        # app factory, generating ou
                 context=query.context.replace(':','_')
                 print context
                 duration = query.duration * 1000 #convert to ms
-                app.stats_client.timing('thermos.queries,context={}'.format(context),duration)
-                # app.stats_client.timing('thermos.queries context={}'.format(query.context),(query.duration*1000)) #statsd_client.timing('sd_timing',ms)
+                app.stats_client.timing('thermos.queries,context={},path={}'.format(context,request.path),duration)
                 print (query.duration)
             return response
 
