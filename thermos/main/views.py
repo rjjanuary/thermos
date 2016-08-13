@@ -1,7 +1,7 @@
-from flask import render_template
+from flask import render_template, request
 from . import main
 from .. import login_manager
-from ..models import User, Bookmark, Tag
+from ..models import User, Bookmark, Tag, Bookmark_flag
 
 
 @login_manager.user_loader
@@ -9,12 +9,12 @@ from ..models import User, Bookmark, Tag
 def load_user(userid):
     return User.query.get(int(userid))
 
+
 @main.route('/')
 # @main.route('/index')
 def index():
     # with statsd_client.timer('index'):
         return render_template('index.html', new_bookmarks=Bookmark.newest(5))
-
 
 @main.app_errorhandler(403)
 def page_not_found(e):

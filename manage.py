@@ -4,7 +4,7 @@ from flask_script import Manager, prompt_bool
 from flask_migrate import Migrate, MigrateCommand
 
 ###load models to make flask migrate aware of them
-from thermos.models import User, Bookmark, Tag, tags
+from thermos.models import User, Bookmark, Tag, tags, Bookmark_flag
 ##########################
 
 import random, pymysql
@@ -35,6 +35,11 @@ def insert_data():
 
     db.session.commit()
     print 'Initialized the database'
+
+@manager.command
+def find_prime(count=100):
+    print str(Bookmark_flag.find_next(int(count)))
+
 
 @manager.command
 def import_bookmarks(user_seed=0, poweruser_count=2000, max_bookmarks=300, total_record_count=500000):
@@ -69,7 +74,7 @@ def import_bookmarks(user_seed=0, poweruser_count=2000, max_bookmarks=300, total
                 db.session.commit()
                 user_record_count = random.randrange(1, max_bookmarks)
                 ins_user = uf.create_user()
-                print 'created user:{} max bookmarks:{}'.format(ins_user.username,user_record_count)
+                # print 'created user:{} max bookmarks:{}'.format(ins_user.username,user_record_count)
             rank,rank2,url = l.split(',')
             db.session.add(Bookmark(url=url.strip(), description=url.strip(), user=ins_user, tags='imported'))
             # print 'inserted bookmark:{}'.format(url.strip())

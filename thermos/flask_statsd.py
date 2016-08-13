@@ -66,11 +66,3 @@ class statsd_middleware(object):
             return self.wsgi_app(environ, start_response)
 
         return response
-
-# @app.after_request  # sql records are available up until the end of the request
-# def after_request(response):  # hook into 'after request' allowing us to send to statsd
-#     if app.config['SQLALCHEMY_RECORD_QUERIES']:
-#         queries = get_debug_queries()
-#         for query in queries:
-#             print (query.duration)
-#         return response

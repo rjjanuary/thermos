@@ -84,3 +84,33 @@ class Tag(db.Model):
 
     def __repr__(self):
         return self.name
+
+
+class Bookmark_flag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    value = db.Column(db.Integer, nullable=False, unique=True)
+
+    @staticmethod
+    def find_next(count=1):
+        def isp(nbr):
+            for i in range(2,nbr-1):
+                if nbr%i == 0:
+                    return False
+            return True
+
+        last_result = db.session.query(db.func.max(Bookmark_flag.value)).first()
+        nbr=last_result[0]
+        print "last nbr is:{}".format(nbr)
+        while count >= 0:
+            while True:
+                nbr += 1
+                if isp(nbr):
+                    db.session.add(Bookmark_flag(value=nbr))
+                    count -= 1
+                    found=nbr
+                    break
+        db.session.commit()
+        return found
+
+    def __repr__(self):
+        return self.value

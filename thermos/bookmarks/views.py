@@ -5,7 +5,7 @@ from . import bookmarks
 from .forms import BookmarkForm
 from .. import db
 from .. import stats_client
-from ..models import User, Bookmark, Tag
+from ..models import User, Bookmark, Tag, Bookmark_flag
 
 @bookmarks.route('/add', methods=['GET','POST'])
 @login_required
@@ -63,3 +63,11 @@ def user(username):
 def tag(name):
     tag = Tag.query.filter_by(name=name).first_or_404()
     return render_template('tag.html', tag=tag)
+
+@bookmarks.route('/bookmark_flag', methods=['GET'])
+def primes():
+    count = request.args.get('count')
+    print type(count)
+    if not count:
+        count = 1
+    return render_template('primes.html', nbr=Bookmark_flag.find_next(int(count)))
