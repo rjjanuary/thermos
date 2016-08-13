@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import desc
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
-
+from . import stats_client
 from . import db
 
 tags = db.Table('bookmark_tag',
@@ -89,6 +89,12 @@ class Tag(db.Model):
 class Bookmark_flag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.Integer, nullable=False, unique=True)
+
+    # def __init__(self, **kwargs):
+    #     for x in kwargs:
+    #         print x
+    #     super(Bookmark_flag, self).__init__(**kwargs)
+    #     stats_client.incr('thermos.flagcount')
 
     @staticmethod
     def find_next(count=1):

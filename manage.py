@@ -27,6 +27,7 @@ def insert_data():
 
     db.session.add(User(username="rjanuary", email="rjanuary@example.com", password="test"))
     db.session.add(User(username="other", email="other@example.com", password="test"))
+    db.session.add(Bookmark_flag(value=1))
 
     ins_user = User.get_by_username("rjanuary")
 
