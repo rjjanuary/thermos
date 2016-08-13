@@ -6,7 +6,7 @@ class Config:
     SECRET_KEY = '\xf7]\x88\x89\x8a\xd8\x99\x0cf\x91\xc9c\x9f\n\x03\x9f8\xadA\xd2\xfc\xf5\x17\x0e'
     DEBUG = False
     SQLALCHEMY_RECORD_QUERIES = False
-    STATSD_HOST = '10.162.2.198'
+    STATSD_HOST = 'localhost'
     STATSD_PORT = 8125
 
 class DevelopmentConfig(Config):
