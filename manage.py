@@ -32,7 +32,10 @@ def insert_data():
         db.session.add(Bookmark(url=url, description=description, user=user, tags=tags))
 
     db.session.add(User(username="rjanuary", email="rjanuary@example.com", password="test"))
-    db.session.add(User(username="other", email="other@example.com", password="test"))
+    db.session.add(User(username="user1", email="other@example.com", password="user1"))
+    db.session.add(User(username="user2", email="other@example.com", password="user2"))
+    db.session.add(User(username="user3", email="other@example.com", password="user3"))
+    db.session.add(User(username="user4", email="other@example.com", password="user4"))
     db.session.add(Bookmark_flag(value=1))
 
     ins_user = User.get_by_username("rjanuary")
@@ -61,7 +64,10 @@ def import_bookmarks(user_seed=0, poweruser_count=2000, max_bookmarks=300, total
             return self._user_count
         def create_user(self):
             username = 'user{}'.format(self.usernumber())
-            db.session.add(User(username=username, email="{}@example.com".format(username), password=username))
+            if not User.query.filter_by(username=username).first():
+                db.session.add(User(username=username, email="{}@example.com".format(username), password=username))
+            else:
+                print 'user {} already exists'.format(username)
             return User.get_by_username(username)
 
     uf = fakeuser_factory()
