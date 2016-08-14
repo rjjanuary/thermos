@@ -4,7 +4,7 @@ from flask_wtf.html5 import URLField
 from wtforms.validators import DataRequired, Regexp, url, ValidationError
 
 
-
+# form object for the bookmark views (shared among all)
 class BookmarkForm(Form):
     url = URLField('The URL of your bookmark:', validators=[DataRequired(), url()])
     description = StringField('Add an optional description:')
