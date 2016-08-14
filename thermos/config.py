@@ -27,11 +27,10 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
 
 class MySQLConfig(Config):
-    DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://thermos:thermos@localhost/thermos'
 
 class MySQLStatsD(Config):
-    DEBUG = True
+    DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://thermos:thermos@localhost/thermos'
     SQLALCHEMY_RECORD_QUERIES = True
 
