@@ -32,10 +32,10 @@ def insert_data():
         db.session.add(Bookmark(url=url, description=description, user=user, tags=tags))
 
     db.session.add(User(username="rjanuary", email="rjanuary@example.com", password="test"))
-    db.session.add(User(username="user1", email="other@example.com", password="user1"))
-    db.session.add(User(username="user2", email="other@example.com", password="user2"))
-    db.session.add(User(username="user3", email="other@example.com", password="user3"))
-    db.session.add(User(username="user4", email="other@example.com", password="user4"))
+    db.session.add(User(username="user1", email="user1@example.com", password="user1"))
+    db.session.add(User(username="user2", email="user2@example.com", password="user2"))
+    db.session.add(User(username="user3", email="user3@example.com", password="user3"))
+    db.session.add(User(username="user4", email="user4@example.com", password="user4"))
     db.session.add(Bookmark_flag(value=1))
 
     ins_user = User.get_by_username("rjanuary")
