@@ -20,6 +20,10 @@ class Bookmark(db.Model):
     _tags = db.relationship('Tag', secondary=tags, lazy='joined',
                             backref=db.backref('bookmarks', lazy='dynamic'))
 
+    def __init__(self, **kwargs):
+        super(Bookmark, self).__init__(**kwargs)
+        stats_client.incr('thermos.models,type=bookmark')
+
     @staticmethod
     def newest(num):
         return Bookmark.query.order_by(desc(Bookmark.date)).limit(num)
@@ -47,6 +51,10 @@ class User(db.Model, UserMixin):
     bookmarks = db.relationship('Bookmark', backref='user', lazy='dynamic')
     password_hash = db.Column(db.String(80))
 
+    def __init__(self, **kwargs):
+        super(User, self).__init__(**kwargs)
+        stats_client.incr('thermos.models,type=user')
+
     @property
     def password(self):
         raise AttributeError('password: write-only field')
@@ -70,6 +78,10 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(25), nullable=False, unique=True, index=True)
 
+    def __init__(self, **kwargs):
+        super(Tag, self).__init__(**kwargs)
+        stats_client.incr('thermos.models,type=tag')
+
     @staticmethod
     def get_or_create(name):
         name = name.strip()
@@ -91,10 +103,8 @@ class Bookmark_flag(db.Model):
     value = db.Column(db.Integer, nullable=False, unique=True)
 
     def __init__(self, **kwargs):
-        for x in kwargs:
-            print x
         super(Bookmark_flag, self).__init__(**kwargs)
-        stats_client.incr('thermos.flagcount')
+        stats_client.incr('thermos.models,type=bookmark_flag')
 
     @staticmethod
     def find_next(count=1):
