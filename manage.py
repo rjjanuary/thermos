@@ -67,7 +67,7 @@ def import_bookmarks(user_seed=0, poweruser_count=2000, max_bookmarks=300, total
             if not User.query.filter_by(username=username).first():
                 db.session.add(User(username=username, email="{}@example.com".format(username), password=username))
             else:
-                print 'user {} already exists'.format(username)
+                print '{} already exists'.format(username)
             return User.get_by_username(username)
 
     uf = fakeuser_factory()
