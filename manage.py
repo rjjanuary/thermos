@@ -1,7 +1,13 @@
+'''
+http://influxdb-python.readthedocs.io/en/latest/examples.html
+'''
+
+
 import os
 from thermos import create_app, db
 from flask_script import Manager, prompt_bool
 from flask_migrate import Migrate, MigrateCommand
+
 
 ###load models to make flask migrate aware of them
 from thermos.models import User, Bookmark, Tag, tags, Bookmark_flag
@@ -37,6 +43,7 @@ def insert_data():
     db.session.commit()
     print 'Initialized the database'
 
+
 @manager.command
 def find_prime(count=100):
     print str(Bookmark_flag.find_next(int(count)))
@@ -44,6 +51,7 @@ def find_prime(count=100):
 
 @manager.command
 def import_bookmarks(user_seed=0, poweruser_count=2000, max_bookmarks=300, total_record_count=500000):
+    app.stats_client.incr('thermos.jobs,jobname=import_bookmarks')
 
     class fakeuser_factory(object):
         def __init__(self,user_seed=user_seed):
