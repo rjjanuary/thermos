@@ -39,7 +39,7 @@ def record_annotation(module,action,text):
 
 @manager.command
 def insert_data():
-    # db.create_all()
+    record_annotation(module="jobs", action="insert_data", text="Data initialization")
     def add_bookmark(user, url, description, tags):
         print 'adding bookmark user:{} url:{} desc:{} tags:{}'.format(user, url, description, tags)
         db.session.add(Bookmark(url=url, description=description, user=user, tags=tags))
