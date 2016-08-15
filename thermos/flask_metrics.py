@@ -8,8 +8,10 @@ http://flask.pocoo.org/snippets/53/                                             
 
 '''
 from statsd import StatsClient as base_statsd
+from influxdb import InfluxDBClient
 from time import time, sleep
 from flask_sqlalchemy import get_debug_queries
+
 
 
 class StatsClient(base_statsd):
@@ -20,7 +22,27 @@ class StatsClient(base_statsd):
         super(StatsClient,self).__init__(
             host=app.config['STATSD_HOST'],
             port=app.config['STATSD_PORT'])
-        app.stats_client=self
+        app.stats_client = self
+
+class Annotator(object):
+    def __init__(self, app=None):
+        if app:
+            self.init_app(app)
+
+    def init_app(self,app):
+        self.influx_client = InfluxDBClient(host=app.config['STATSD_HOST'], port=app.config['INFLUX_PORT'],
+                                           database='telegraf')
+        app.annotator = self
+
+    def write(self, module, action, text):
+        try:
+            self.influx_client.write_points([{
+                "measurement": "annotations",
+                "tags": {"module": "jobs", "action": "import_bookmarks"},
+                "fields": {"text": "Bookmark Import Began"}
+            }])
+        except:
+            pass
 
 class FlaskTimer(object):
     def __init__(self, app, tags=None):
@@ -64,5 +86,4 @@ class statsd_middleware(object):
 
         except Exception:
             return self.wsgi_app(environ, start_response)
-
         return response
