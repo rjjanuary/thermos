@@ -15,14 +15,27 @@ from thermos.models import User, Bookmark, Tag, tags, Bookmark_flag
 
 import random, pymysql
 from datetime import datetime
+from influxdb import InfluxDBClient
 
-app = create_app(os.getenv('THERMOS_ENV') or 'dev')
+app = create_app(os.getenv('THERMOS_ENV') or 'dev')                                # create thermos app instance
+influx_client = InfluxDBClient(host='192.168.2.6',port=8086,database='telegraf')   # setup influxdb client
 print ('THERMOS_ENV {} '.format(os.getenv('THERMOS_ENV')))
 
-manager = Manager(app)
+manager = Manager(app)                                                             # initialize manager
 
-migrate = Migrate(app, db)
+migrate = Migrate(app, db)                                                         # add DB management
 manager.add_command('db', MigrateCommand)
+
+# wrapper for influxdb's write method
+def record_annotation(module,action,text):
+    try:
+        influx_client.write_points([{
+            "measurement": "annotations",
+            "tags": {"module": "jobs","action":"import_bookmarks"},
+            "fields": {"text": "Bookmark Import Began"}
+        }])
+    except:
+        print 'Unable to save annotation'
 
 @manager.command
 def insert_data():
@@ -48,13 +61,8 @@ def insert_data():
 
 
 @manager.command
-def find_prime(count=100):
-    print str(Bookmark_flag.find_next(int(count)))
-
-
-@manager.command
 def import_bookmarks(user_seed=0, poweruser_count=2000, max_bookmarks=300, total_record_count=500000):
-    app.stats_client.incr('thermos.jobs,jobname=import_bookmarks')
+    record_annotation(module="jobs",action="import_bookmarks", text="Bookmark Import Began")
 
     class fakeuser_factory(object):
         def __init__(self,user_seed=user_seed):
@@ -95,13 +103,22 @@ def import_bookmarks(user_seed=0, poweruser_count=2000, max_bookmarks=300, total
             # print 'inserted bookmark:{}'.format(url.strip())
             user_record_count -= 1
     db.session.commit()
+    record_annotation(module="jobs", action="import_bookmarks", text="Bookmark Import Complete")
 
 @manager.command
 def dropdb():
     if prompt_bool(
         "Are you sure you want to lose all your data"):
         db.drop_all()
+        record_annotation(module="jobs", action="dropdb", text="Database Drop confirmed")
         print 'Dropped the database'
+
+
+@manager.command
+def find_prime(count=100):
+    print str(Bookmark_flag.find_next(int(count)))
+    record_annotation(module="jobs", action="find_prime", text='found next {} primes'.format(count))
+
 
 if __name__ == '__main__':
     manager.run()
