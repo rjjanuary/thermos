@@ -31,8 +31,8 @@ def record_annotation(module,action,text):
     try:
         influx_client.write_points([{
             "measurement": "annotations",
-            "tags": {"module": "jobs","action":"import_bookmarks"},
-            "fields": {"text": "Bookmark Import Began"}
+            "tags": {"module": module,"action":action},
+            "fields": {"text": text}
         }])
     except:
         print 'Unable to save annotation'
