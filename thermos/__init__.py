@@ -5,12 +5,13 @@ from flask_sqlalchemy import SQLAlchemy, get_debug_queries
 from flask_login import LoginManager
 from flask_moment import Moment
 from flask_debugtoolbar import DebugToolbarExtension
-from flask_statsd import statsd_middleware, StatsClient
+from flask_metrics import statsd_middleware, StatsClient, Annotator
 
 from .config import config_by_name
 
 db = SQLAlchemy()                                   # create instance of SQLAlchemy ORM engine
 stats_client = StatsClient()                        # create instance of our app level statsd client
+annotator = Annotator()
 
 #Configure Authentication
 login_manager=LoginManager()                        # begin to configure authentication
@@ -31,7 +32,9 @@ def create_app(config_name):                        # app factory, generating ou
     toolbar.init_app(app)
 
     stats_client.init_app(app)                      # initialize our statsd client, assign it within app
+    annotator.init_app(app)                         # initialize our annotator, assign it within app
     app.wsgi_app = statsd_middleware(app)           # initialize our statsd middleware
+    annotator.write(module='app',action='startup',text='application initialized')
 
     from .main import main as main_blueprint        # blueprints are self contained portions of an application
     app.register_blueprint(main_blueprint, url_prefix='/')
