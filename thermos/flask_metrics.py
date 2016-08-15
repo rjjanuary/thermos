@@ -30,7 +30,7 @@ class Annotator(object):
             self.init_app(app)
 
     def init_app(self,app):
-        self.influx_client = InfluxDBClient(host=app.config['STATSD_HOST'], port=app.config['INFLUX_PORT'],
+        self.influx_client = InfluxDBClient(host=app.config['INFLUX_HOST'], port=app.config['INFLUX_PORT'],
                                            database='telegraf')
         app.annotator = self
 
