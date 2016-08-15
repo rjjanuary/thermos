@@ -8,6 +8,7 @@ class Config:
     SQLALCHEMY_RECORD_QUERIES = False
     STATSD_HOST = 'localhost'
     STATSD_PORT = 8125
+    INFLUX_PORT = 8086
 
 class DevelopmentConfig(Config):
     DEBUG = True
