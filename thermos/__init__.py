@@ -34,7 +34,7 @@ def create_app(config_name):                        # app factory, generating ou
     stats_client.init_app(app)                      # initialize our statsd client, assign it within app
     annotator.init_app(app)                         # initialize our annotator, assign it within app
     app.wsgi_app = statsd_middleware(app)           # initialize our statsd middleware
-    annotator.write(module='app',action='startup',text='application initialized')
+    # annotator.write(module='app',action='startup',text='application initialized')
 
     from .main import main as main_blueprint        # blueprints are self contained portions of an application
     app.register_blueprint(main_blueprint, url_prefix='/')
