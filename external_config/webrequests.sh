@@ -1,6 +1,6 @@
 #!/bin/bash
 
-web_host=192.168.2.5;
+web_host=localhost;
 while true; do
   curl http://$web_host/bookmarks/user/user1 > /dev/null;
   curl http://$web_host/bookmarks/user/user2 > /dev/null;
