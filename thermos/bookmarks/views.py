@@ -18,7 +18,7 @@ def add():
         url = form.url.data
         description = form.description.data
         tags = form.tags.data
-        bm = Bookmark(user=current_user,url=url, description=description, tags=tags)
+        bm = Bookmark(user=current_user, url=url, description=description, tags=tags)
         db.session.add(bm)
         db.session.commit()
         # app.logger.debug("Stored Bookmark: '{}'".format(url))

@@ -97,7 +97,6 @@ class Tag(db.Model):
     def __repr__(self):
         return self.name
 
-
 class Bookmark_flag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.Integer, nullable=False, unique=True)

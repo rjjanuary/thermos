@@ -6,8 +6,6 @@ from thermos import db, app, login_manager
 
 
 
-
-
 # @app.route('/login', methods=['GET','POST'])
 # def login():
 #     form = LoginForm()
