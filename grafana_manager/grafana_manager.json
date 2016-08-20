@@ -12,7 +12,7 @@
         "auth_token": "eyJrIjoiWVpMREIwZ0hiZnVZS2hhZDVkb09qWjFzQjI4YzQxOWgiLCJuIjoiYmFja3VwcyIsImlkIjoxfQ=="}
     ,
       "THERMOS":{
-        "host": "192.168.2.6",
+        "host": "metrics",
         "port": 3000,
         "auth_token": "eyJrIjoicldWZkJPTDRRTXJRZXhWTG41YVZqVTlHOHVXN0gxcWkiLCJuIjoiYmFja3VwcyIsImlkIjoxfQ=="}
     },

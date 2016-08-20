@@ -18,7 +18,7 @@ from datetime import datetime
 from influxdb import InfluxDBClient
 
 app = create_app(os.getenv('THERMOS_ENV') or 'mysql_statsd')                       # create thermos app instance
-influx_client = InfluxDBClient(host='192.168.2.6',port=8086,database='telegraf')   # setup influxdb client
+influx_client = InfluxDBClient(host='metrics',port=8086,database='telegraf')   # setup influxdb client
 print ('THERMOS_ENV {} '.format(os.getenv('THERMOS_ENV')))
 
 manager = Manager(app)                                                             # initialize manager
