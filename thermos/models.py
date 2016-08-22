@@ -22,7 +22,7 @@ class Bookmark(db.Model):
 
     def __init__(self, **kwargs):
         super(Bookmark, self).__init__(**kwargs)
-        stats_client.incr('thermos.models,type=bookmark')
+        stats_client.incr('thermos.models,type=bookmark')                   #increment the bookmark counter
 
     @staticmethod
     def newest(num):
@@ -53,7 +53,7 @@ class User(db.Model, UserMixin):
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
-        stats_client.incr('thermos.models,type=user')
+        stats_client.incr('thermos.models,type=user')                       #increment the user counter
 
     @property
     def password(self):
@@ -80,7 +80,7 @@ class Tag(db.Model):
 
     def __init__(self, **kwargs):
         super(Tag, self).__init__(**kwargs)
-        stats_client.incr('thermos.models,type=tag')
+        stats_client.incr('thermos.models,type=tag')                       #increment the tag counter
 
     @staticmethod
     def get_or_create(name):
@@ -103,7 +103,7 @@ class Bookmark_flag(db.Model):
 
     def __init__(self, **kwargs):
         super(Bookmark_flag, self).__init__(**kwargs)
-        stats_client.incr('thermos.models,type=bookmark_flag')
+        stats_client.incr('thermos.models,type=bookmark_flag')              #increment the bookmark_flag counter
 
     @staticmethod
     def find_next(count=1):
