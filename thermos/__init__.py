@@ -45,18 +45,6 @@ def create_app(config_name):                        # app factory, generating ou
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
-    @app.after_request                              # sql records are available up until the end of the request
-    def after_request(response):                    # hook into 'after request' allowing us to send to statsd
-        if app.config['SQLALCHEMY_RECORD_QUERIES']:
-            queries = get_debug_queries()
-            for query in queries:
-                context=query.context.replace(':','_')
-                print context
-                duration = query.duration * 1000 #convert to ms
-                app.stats_client.timing('thermos.queries,context={},path={}'.format(context,request.path),duration)
-                print (query.duration)
-            return response
-
     return app
 
 
