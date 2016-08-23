@@ -1,4 +1,4 @@
 #!/bin/bash
 echo "sending single packet to statsd"
-echo "os_threads,host=globalzone,zone=zonename:114|g" | nc -uw 1 localhost 8125
+echo "example,city=austin,state=tx:114|g" | nc -uw 1 localhost 8125
 
