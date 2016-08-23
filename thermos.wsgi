@@ -5,4 +5,4 @@ sys.path.append(PROJECT_DIR)
 
 from thermos import create_app
 application = create_app(os.getenv('THERMOS_ENV') or 'mysql_statsd')
-application.annotator.write(module='app',action='startup',text='application initialized')
+# application.annotator.write(module='app',action='startup',text='application initialized')
