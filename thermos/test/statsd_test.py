@@ -12,7 +12,7 @@ from statsd import StatsClient
 from datetime import datetime
 from time import sleep
 
-statsd_client = StatsClient(host='ets-vvaprd-metrics-a01')
+statsd_client = StatsClient(host='metrics')
 
 # for x in range(100,1000,100):
 #     tstart = datetime.utcnow()
