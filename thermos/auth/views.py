@@ -2,6 +2,7 @@ import json
 
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user
+from time import sleep
 
 from . import auth
 from .. import db, stats_client
@@ -22,7 +23,6 @@ def login():
             #^'next' will redirect the user to where they were attempting to go.  (look at browser query string)
         flash('Incorrect username or password.')
         stats_client.incr('thermos.logins.fail')                    # added line to increment fail counter
-
     return render_template('login.html', form=form)
 
 @auth.route('/logout')
