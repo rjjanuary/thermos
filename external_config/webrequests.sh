@@ -7,5 +7,5 @@ while true; do
   curl http://$web_host/bookmarks/user/user3 > /dev/null;
   curl http://$web_host/bookmarks/user/user4 > /dev/null;
   curl http://$web_host/bookmarks/user/user99999 > /dev/null;
-  curl http://$web_host/bookmarks/auth/login > /dev/null;
+  curl http://$web_host/auth/login > /dev/null;
 done
