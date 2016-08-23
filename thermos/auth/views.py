@@ -23,7 +23,7 @@ def login():
             #^'next' will redirect the user to where they were attempting to go.  (look at browser query string)
         flash('Incorrect username or password.')
         stats_client.incr('thermos.logins.fail')                    # added line to increment fail counter
-        sleep(2)                                                    # fixed sleep to only occur on failed login
+    sleep(2)                                                    # fixed sleep to only occur on failed login
     return render_template('login.html', form=form)
 
 @auth.route('/logout')
